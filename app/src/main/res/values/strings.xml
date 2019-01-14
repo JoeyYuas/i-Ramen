@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">i-Ramen</string>
     <string name="i_ramen">i-Ramen</string>
+    <string name="button_eat">Eat</string>
 </resources>
