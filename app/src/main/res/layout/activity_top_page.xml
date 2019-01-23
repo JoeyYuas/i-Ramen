@@ -38,7 +38,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:text="@string/i_ramen"
-            app:fontFamily="@font/keania_one" android:textSize="90sp" android:textColor="#F2F2F2"
+            app:fontFamily="@font/keania_one" android:textSize="90sp" android:textColor="@color/Main_White"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="466dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

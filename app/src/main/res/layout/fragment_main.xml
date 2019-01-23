@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/Main_White">
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/i_ramen"
+              android:textSize="50sp"
+              android:layout_centerHorizontal="true"
+              android:layout_centerVertical="true"
+              android:id="@+id/ramenPoint"/>
+
+    <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_progress"
+
+    />
+
+    <Button
+            android:text="@string/button_eat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_Eat"
+            android:width="120dp"
+            android:height="120dp"
+            android:stateListAnimator="@null"
+            android:elevation="10dp"
+            android:background="@drawable/button_format"
+            android:textSize="30sp"
+            android:layout_marginTop="200dp"
+            android:fontFamily="sans-serif"
+            android:textColor="#333333"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@+id/ramenPoint"/>
+
+
+</RelativeLayout>
