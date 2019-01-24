@@ -3,21 +3,19 @@
     <item android:id="@android:id/background">
         <shape>
             <corners android:radius="8dp"/>
-            <solid android:color="#B1ADAD"/>
+            <solid android:color="#F7F7F7"/>
+            <stroke android:width="3dp"
+                    android:color="@color/black_stroke"/>
         </shape>
     </item>
-
-    <!--<item android:id="@android:id/secondaryProgress">-->
-        <!--<clip>-->
-            <!--<color android:color="#aa8000" />-->
-        <!--</clip>-->
-    <!--</item>-->
 
     <item android:id="@android:id/progress">
         <clip>
             <shape>
                 <corners android:radius="8dp"/>
                 <solid android:color="#ff8000" />
+                <stroke android:width="3dp"
+                        android:color="@color/black_stroke"/>
             </shape>
         </clip>
     </item>
