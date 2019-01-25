@@ -4,13 +4,13 @@
       tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/test1"
+        <item android:id="@+id/fragment_main"
               android:icon="@drawable/ic_test"
               android:title="test1"/>
-        <item android:id="@+id/test2"
+        <item android:id="@+id/fragment_quest"
               android:icon="@drawable/ic_test"
               android:title="test2"/>
-        <item android:id="@+id/test3"
+        <item android:id="@+id/fragment_record"
               android:icon="@drawable/ic_test"
               android:title="test3"/>
     </group>
