@@ -20,9 +20,8 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:elevation="4dp"
-                android:textColor="#F2F2F2"
+                android:textColor="@color/Main_White"
                 android:background="#FF6C02"/>
-
         <FrameLayout
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
