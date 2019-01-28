@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Quest_Fragment : Fragment() {
+class QuestFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
