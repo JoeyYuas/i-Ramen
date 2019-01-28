@@ -5,12 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
-import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
-        fragment = Main_Fragment()
+        fragment = MainFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
         //navigationview.setCheckedItem(R.id.nav_view)
     }
@@ -50,10 +48,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (item.itemId) {
             R.id.fragment_main -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, Main_Fragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MainFragment()).commit()
             }
             R.id.fragment_quest -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, Quest_Fragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, QuestFragment()).commit()
             }
         }
         drawer.closeDrawer(GravityCompat.START)
@@ -67,6 +65,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }else{
             super.onBackPressed()
         }
+    }
+
+    fun moveQuestFragment(){
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, QuestFragment()).commit()
     }
 
 }
