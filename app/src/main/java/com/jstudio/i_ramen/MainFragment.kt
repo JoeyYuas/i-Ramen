@@ -8,7 +8,13 @@ import android.support.v4.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.view.animation.DecelerateInterpolator
+import android.animation.ObjectAnimator
+import android.animation.Animator
+import kotlinx.android.synthetic.main.fragment_main.*
+
 
 class MainFragment : Fragment() {
 
@@ -31,6 +37,14 @@ class MainFragment : Fragment() {
 
         val havePointText = thisView.findViewById<TextView>(R.id.havePoint)
         havePointText.text = "${havePoint} pt"
+        val eatCount = thisView.findViewById<TextView>(R.id.eat_count)
+        eatCount.text = "${havePoint/100} 杯まで食べられます"
+
+        val progressBar = thisView.findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.max = 100
+        progressBar.progress = havePoint%100
+
+
 
 //        クエスト処理
         if (dateManager.isNextDay(SharedPreferences)) {
@@ -59,4 +73,12 @@ class MainFragment : Fragment() {
             .setNegativeButton("いいえ", null)
             .show()
     }
+
+//    private fun onProgressChanged(percentage: Int) {
+//        val animation = ObjectAnimator.ofInt(progressBar, "progress", percentage)
+//        animation.duration = 500 // 0.5秒間でアニメーションする
+//        animation.interpolator = DecelerateInterpolator()
+//        animation.start()
+//    }
+
 }
