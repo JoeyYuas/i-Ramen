@@ -33,6 +33,7 @@ class MainFragment : Fragment() {
 
 //        ポイント処理（呼び出し、表示、保存）
         val pointManager = PointManager()
+        //pointManager.setPoint(SharedPreferences, 250)
         val havePoint = pointManager.getPoint(SharedPreferences)
 
         val havePointText = thisView.findViewById<TextView>(R.id.havePoint)
@@ -43,6 +44,8 @@ class MainFragment : Fragment() {
         val progressBar = thisView.findViewById<ProgressBar>(R.id.progressBar)
         progressBar.max = 100
         progressBar.progress = havePoint%100
+
+
 
 
 
