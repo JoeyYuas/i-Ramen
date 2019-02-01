@@ -20,7 +20,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-//        viewを保持
+//        viewを保持（とりあえずフラグメントではこれをやっておくと便利かも）
         val thisView = inflater.inflate(R.layout.fragment_main, container, false)
 
 
