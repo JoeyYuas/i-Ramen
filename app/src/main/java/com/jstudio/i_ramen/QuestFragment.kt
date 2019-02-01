@@ -16,7 +16,7 @@ class QuestFragment : Fragment() {
         val questMassage = thisView.findViewById<TextView>(R.id.Quest_Massage)
         val readText = ReadText()
 
-        questMassage.text = readText.getTextOneLine(activity!!)
+        questMassage.text = readText.getTextOneLine(activity!!).replace("\\n", "\n")
 
         return thisView
     }

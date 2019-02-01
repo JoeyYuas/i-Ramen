@@ -19,9 +19,13 @@ class ReadText {
             lineCount ++
         }
 
+//        ０からプラスしていくため、余分に１つ多くカウントされてしまう
+        lineCount -= 1
+
         val random: Int = (0..lineCount).random()
 
         return readRandomText[random]
+
 
     }
 

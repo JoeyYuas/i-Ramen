@@ -1,15 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
                                              android:layout_height="match_parent">
-    <TextView
-            android:text="Fragment_quest"
-            android:textSize="50sp"
+    <Button
+            android:text="@string/button_eat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/Quest_Massage" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="25dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="332dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="25dp"
-            android:layout_marginBottom="332dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:id="@+id/Quest_Clear"
+            android:width="120dp"
+            android:height="120dp"
+            android:stateListAnimator="@null"
+            android:elevation="10dp"
+            android:background="@drawable/button_format"
+            android:textSize="30sp"
+            android:fontFamily="@font/keania_one"
+            android:textColor="#333333"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="88dp"
+            app:layout_constraintTop_toBottomOf="@+id/Quest_Massage"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="145dp"
+            android:layout_marginBottom="97dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="146dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="@string/questMassage"
+            android:textSize="20sp"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/Quest_Massage"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="30dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="31dp"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/Quest_Title" android:layout_marginBottom="332dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+            android:text="@string/questTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:fontFamily="@font/keania_one"
+            android:id="@+id/Quest_Title"
+            android:layout_marginTop="230dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/Quest_Massage" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="26dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="26dp"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/trophy"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/Quest_Title" android:layout_marginTop="55dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="130dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="131dp"/>
 
 </android.support.constraint.ConstraintLayout>
