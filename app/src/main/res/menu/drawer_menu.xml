@@ -6,13 +6,13 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/fragment_main"
               android:icon="@drawable/ic_test"
-              android:title="test1"/>
+              android:title="トップページ"/>
         <item android:id="@+id/fragment_quest"
               android:icon="@drawable/ic_test"
-              android:title="test2"/>
+              android:title="クエスト"/>
         <item android:id="@+id/fragment_record"
               android:icon="@drawable/ic_test"
-              android:title="test3"/>
+              android:title="ラーメンの記憶"/>
     </group>
 
     <item android:title="TestList">

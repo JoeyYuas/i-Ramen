@@ -48,7 +48,7 @@
             android:height="120dp"
             android:stateListAnimator="@null"
             android:elevation="10dp"
-            android:background="@drawable/button_format"
+            android:background="@drawable/button_ripple"
             android:textSize="30sp"
             android:fontFamily="@font/keania_one"
             android:textColor="#333333"
