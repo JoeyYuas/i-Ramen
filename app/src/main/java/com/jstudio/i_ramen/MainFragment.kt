@@ -1,5 +1,6 @@
 package com.jstudio.i_ramen
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
@@ -8,9 +9,12 @@ import android.support.v4.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.robinhood.ticker.TickerView
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class MainFragment : Fragment() {
@@ -22,7 +26,6 @@ class MainFragment : Fragment() {
 
 //        アクションバーのタイトルを変更
         activity!!.title = "トップページ"
-
 
         //activityに保持されたintentをgetしている（あまりフラグメント間で遷移させないほうがいいかも）
 //        val isQuestClear = activity!!.intent.getBooleanExtra("QUEST_CLEAR", false)
@@ -45,14 +48,17 @@ class MainFragment : Fragment() {
         //pointManager.setPoint(SharedPreferences, 250)
         val havePoint = pointManager.getPoint(SharedPreferences)
 
-        val havePointText = thisView.findViewById<TextView>(R.id.havePoint)
-        havePointText.text = "${havePoint} pt"
+        val ticker = thisView.findViewById<TickerView>(R.id.havePoint)
+        ticker.text = "$havePoint pt"
+
+//        val havePointText = thisView.findViewById<TextView>(R.id.havePoint)
+//        havePointText.text = "${havePoint} pt"
         val eatCount = thisView.findViewById<TextView>(R.id.eat_count)
         eatCount.text = "${havePoint / 100} 杯まで食べられます"
 
         val progressBar = thisView.findViewById<ProgressBar>(R.id.progressBar)
         progressBar.max = 100
-        progressBar.progress = havePoint % 100
+        this.onProgressChanged(progressBar, havePoint % 100)
 
 
 //        クエスト処理
@@ -62,6 +68,11 @@ class MainFragment : Fragment() {
                 this.activity
             )
         }
+
+//        EATボタンを押したときの挙動（カレンダーを表示）
+
+//        カレンダーを選択したときの挙動
+
 
         return thisView
     }
@@ -83,11 +94,11 @@ class MainFragment : Fragment() {
             .show()
     }
 
-//    private fun onProgressChanged(percentage: Int) {
-//        val animation = ObjectAnimator.ofInt(progressBar, "progress", percentage)
-//        animation.duration = 500 // 0.5秒間でアニメーションする
-//        animation.interpolator = DecelerateInterpolator()
-//        animation.start()
-//    }
+    private fun onProgressChanged(progressBar: ProgressBar, percentage: Int) {
+        val animation = ObjectAnimator.ofInt(progressBar, "progress", percentage)
+        animation.duration = 500 // 0.5秒間でアニメーションする
+        animation.interpolator = DecelerateInterpolator()
+        animation.start()
+    }
 
 }

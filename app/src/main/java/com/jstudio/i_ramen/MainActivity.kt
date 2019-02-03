@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.fragment_quest -> {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, QuestFragment()).commit()
             }
+            R.id.fragment_memory -> {
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MemoryFragment()).commit()
+            }
         }
         drawer.closeDrawer(GravityCompat.START)
         return true

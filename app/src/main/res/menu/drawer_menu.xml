@@ -10,7 +10,7 @@
         <item android:id="@+id/fragment_quest"
               android:icon="@drawable/ic_test"
               android:title="クエスト"/>
-        <item android:id="@+id/fragment_record"
+        <item android:id="@+id/fragment_memory"
               android:icon="@drawable/ic_test"
               android:title="ラーメンの記憶"/>
     </group>
