@@ -10,10 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.view.animation.DecelerateInterpolator
-import android.animation.ObjectAnimator
-import android.animation.Animator
-import kotlinx.android.synthetic.main.fragment_main.*
+import android.widget.Toast
 
 
 class MainFragment : Fragment() {
@@ -23,13 +20,25 @@ class MainFragment : Fragment() {
 //        viewを保持（とりあえずフラグメントではこれをやっておくと便利かも）
         val thisView = inflater.inflate(R.layout.fragment_main, container, false)
 
+//        アクションバーのタイトルを変更
+        activity!!.title = "トップページ"
+
+
+        //activityに保持されたintentをgetしている（あまりフラグメント間で遷移させないほうがいいかも）
+//        val isQuestClear = activity!!.intent.getBooleanExtra("QUEST_CLEAR", false)
+//
+//        if (isQuestClear) {
+//            Toast.makeText(context, "クエストクリアおめでとう", Toast.LENGTH_LONG).show()
+//            activity!!.intent.putExtra("QUEST_CLEAR", false)
+//        }
+
 
 //        日付処理
         val dateManager = DateManager()
 
 //        データ保存処理
         val SharedPreferences =
-            activity!!.getSharedPreferences("SAVE_DATE", Context.MODE_PRIVATE)
+            activity!!.getSharedPreferences("SAVE_DATE_ALERT", Context.MODE_PRIVATE)
 
 //        ポイント処理（呼び出し、表示、保存）
         val pointManager = PointManager()
@@ -39,14 +48,11 @@ class MainFragment : Fragment() {
         val havePointText = thisView.findViewById<TextView>(R.id.havePoint)
         havePointText.text = "${havePoint} pt"
         val eatCount = thisView.findViewById<TextView>(R.id.eat_count)
-        eatCount.text = "${havePoint/100} 杯まで食べられます"
+        eatCount.text = "${havePoint / 100} 杯まで食べられます"
 
         val progressBar = thisView.findViewById<ProgressBar>(R.id.progressBar)
         progressBar.max = 100
-        progressBar.progress = havePoint%100
-
-
-
+        progressBar.progress = havePoint % 100
 
 
 //        クエスト処理

@@ -2,6 +2,7 @@
     <string name="app_name">i-Ramen</string>
     <string name="i_ramen">i-Ramen</string>
     <string name="button_eat">Eat</string>
+    <string name="clear_button">Clear</string>
     <string name="navigation_header">項目を選んでね</string>
     <string name="havePoint">null pt</string>
     <string name="questMassage">クエストはありません</string>
@@ -13,4 +14,5 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="pointGetComment">10ポイントGET！</string>
 </resources>

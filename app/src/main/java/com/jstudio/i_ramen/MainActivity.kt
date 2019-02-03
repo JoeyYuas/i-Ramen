@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-
     override fun onBackPressed(){
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START)
@@ -66,9 +65,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-
-    fun moveQuestFragment(){
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, QuestFragment()).commit()
-    }
-
 }
