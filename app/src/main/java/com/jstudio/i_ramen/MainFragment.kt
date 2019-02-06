@@ -1,6 +1,7 @@
 package com.jstudio.i_ramen
 
 import android.animation.ObjectAnimator
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
@@ -10,11 +11,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import android.widget.Button
+import android.widget.CalendarView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import com.robinhood.ticker.TickerView
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.calendar_popup.view.*
+import razerdp.basepopup.QuickPopupBuilder
+import kotlin.concurrent.thread
+import razerdp.basepopup.QuickPopupConfig
+
+
 
 
 class MainFragment : Fragment() {
@@ -26,6 +33,26 @@ class MainFragment : Fragment() {
 
 //        アクションバーのタイトルを変更
         activity!!.title = "トップページ"
+
+        //        DB
+        val eatMemory = EatMemory()
+
+        eatMemory.ramenName = "Sample"
+        eatMemory.eatDate = "2018/01/05"
+
+        val eatMemoryDB = Room.databaseBuilder(
+            activity!!.applicationContext, AppDatabase::class.java, "database-name"
+        ).build()
+
+        val eatMemoryList: MutableList<EatMemory> = mutableListOf()
+        eatMemoryList.add(eatMemory)
+
+        thread {
+
+            eatMemoryDB.eatMemoryDAO().insertAll(eatMemoryList)
+
+        }
+
 
         //activityに保持されたintentをgetしている（あまりフラグメント間で遷移させないほうがいいかも）
 //        val isQuestClear = activity!!.intent.getBooleanExtra("QUEST_CLEAR", false)
@@ -70,9 +97,20 @@ class MainFragment : Fragment() {
         }
 
 //        EATボタンを押したときの挙動（カレンダーを表示）
+        val view = PopUpManager.PopUpManagerCalendar(context)
+        val eatButton = thisView.findViewById<Button>(R.id.button_Eat)
+        eatButton.setOnClickListener {
+            view.showPopupWindow()
+            val calendarView = view.findViewById<CalendarView>(R.id.calendarView)
 
-//        カレンダーを選択したときの挙動
-
+//            カレンダーを選択したときの挙動（日付を読み取る）
+            calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+                println(year)
+                println(month)
+                println(dayOfMonth)
+            }
+        }
+        
 
         return thisView
     }

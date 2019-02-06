@@ -7,9 +7,9 @@ import android.arch.persistence.room.Query
 @Dao
 interface EatMemoryDAO {
     @Query("SELECT * FROM EatMemory")
-    fun getAll(): List<EatMemory>
+    fun getAll(): MutableList<EatMemory>
 
     @Insert
-    fun insertAll(users: List<EatMemory>)
+    fun insertAll(users: MutableList<EatMemory>)
 
 }
