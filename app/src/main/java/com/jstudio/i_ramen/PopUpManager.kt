@@ -39,5 +39,9 @@ class PopUpManager {
             return getDefaultScaleAnimation(false)
         }
 
+        override fun setOnDismissListener(onDismissListener: OnDismissListener?): BasePopupWindow {
+            return super.setOnDismissListener(onDismissListener)
+        }
+
     }
 }

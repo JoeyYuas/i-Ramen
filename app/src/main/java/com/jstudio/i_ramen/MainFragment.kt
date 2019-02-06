@@ -11,15 +11,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.widget.Button
-import android.widget.CalendarView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import com.robinhood.ticker.TickerView
 import kotlinx.android.synthetic.main.calendar_popup.view.*
+import razerdp.basepopup.BasePopupWindow
+import razerdp.basepopup.BasePopupWindow.OnDismissListener
 import razerdp.basepopup.QuickPopupBuilder
 import kotlin.concurrent.thread
 import razerdp.basepopup.QuickPopupConfig
+import android.widget.Toast
+
+
 
 
 
@@ -110,7 +112,13 @@ class MainFragment : Fragment() {
                 println(dayOfMonth)
             }
         }
-        
+
+        view.onDismissListener = object : BasePopupWindow.OnDismissListener() {
+            override fun onDismiss() {
+                Toast.makeText(context, "dismiss", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         return thisView
     }
