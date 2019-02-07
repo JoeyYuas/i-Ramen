@@ -13,20 +13,20 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import com.robinhood.ticker.TickerView
-import kotlinx.android.synthetic.main.calendar_popup.view.*
 import razerdp.basepopup.BasePopupWindow
-import razerdp.basepopup.BasePopupWindow.OnDismissListener
-import razerdp.basepopup.QuickPopupBuilder
 import kotlin.concurrent.thread
-import razerdp.basepopup.QuickPopupConfig
 import android.widget.Toast
 
-
-
-
-
-
 class MainFragment : Fragment() {
+
+    //        日付処理
+    private val dateManager = DateManager()
+
+    var selectedYear: Int? = null
+    var selectedMonth: Int? = null
+    var selectedDayOfMonth: Int? = null
+
+    private val eatMemory = EatMemory()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -36,26 +36,6 @@ class MainFragment : Fragment() {
 //        アクションバーのタイトルを変更
         activity!!.title = "トップページ"
 
-        //        DB
-        val eatMemory = EatMemory()
-
-        eatMemory.ramenName = "Sample"
-        eatMemory.eatDate = "2018/01/05"
-
-        val eatMemoryDB = Room.databaseBuilder(
-            activity!!.applicationContext, AppDatabase::class.java, "database-name"
-        ).build()
-
-        val eatMemoryList: MutableList<EatMemory> = mutableListOf()
-        eatMemoryList.add(eatMemory)
-
-        thread {
-
-            eatMemoryDB.eatMemoryDAO().insertAll(eatMemoryList)
-
-        }
-
-
         //activityに保持されたintentをgetしている（あまりフラグメント間で遷移させないほうがいいかも）
 //        val isQuestClear = activity!!.intent.getBooleanExtra("QUEST_CLEAR", false)
 //
@@ -63,10 +43,6 @@ class MainFragment : Fragment() {
 //            Toast.makeText(context, "クエストクリアおめでとう", Toast.LENGTH_LONG).show()
 //            activity!!.intent.putExtra("QUEST_CLEAR", false)
 //        }
-
-
-//        日付処理
-        val dateManager = DateManager()
 
 //        データ保存処理
         val SharedPreferences =
@@ -87,35 +63,48 @@ class MainFragment : Fragment() {
 
         val progressBar = thisView.findViewById<ProgressBar>(R.id.progressBar)
         progressBar.max = 100
-        this.onProgressChanged(progressBar, havePoint % 100)
+        onProgressChanged(progressBar, havePoint % 100)
 
 
 //        クエスト処理
         if (dateManager.isNextDay(SharedPreferences)) {
-            this.alertDialog(
+            dailyAlertDialog(
                 "デイリークエスト", "新規クエストを確認しますか？",
                 this.activity
             )
         }
 
 //        EATボタンを押したときの挙動（カレンダーを表示）
-        val view = PopUpManager.PopUpManagerCalendar(context)
+        val PopUpCalendarView = PopUpManager.PopUpManagerCalendar(context)
         val eatButton = thisView.findViewById<Button>(R.id.button_Eat)
         eatButton.setOnClickListener {
-            view.showPopupWindow()
-            val calendarView = view.findViewById<CalendarView>(R.id.calendarView)
+
+            Toast.makeText(context, "日付を選択してカレンダーの\n外をタップして下さい", Toast.LENGTH_LONG).show()
+
+            PopUpCalendarView.showPopupWindow()
+            val calendarView = PopUpCalendarView.findViewById<CalendarView>(R.id.calendarView)
+
+//            その日のまま閉じた場合
+            val dateList = dateManager.getIntDate()
+            selectedYear = dateList[0]
+            selectedMonth = dateList[1]
+            selectedDayOfMonth = dateList[2]
+
 
 //            カレンダーを選択したときの挙動（日付を読み取る）
             calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-                println(year)
-                println(month)
-                println(dayOfMonth)
+                selectedYear = year
+                selectedMonth = month
+                selectedDayOfMonth = dayOfMonth
             }
         }
 
-        view.onDismissListener = object : BasePopupWindow.OnDismissListener() {
+        PopUpCalendarView.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
-                Toast.makeText(context, "dismiss", Toast.LENGTH_SHORT).show()
+                eatedAlertDialog(
+                    "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日",
+                    "\nこの日にラーメンを食べましたか？"
+                )
             }
         }
 
@@ -125,7 +114,7 @@ class MainFragment : Fragment() {
 
 
     //    アラートダイアログの実装
-    private fun alertDialog(title: String, message: String, activity: FragmentActivity?) {
+    private fun dailyAlertDialog(title: String, message: String, activity: FragmentActivity?) {
 
         val AlertDialogBuiluder = android.app.AlertDialog.Builder(activity)
 
@@ -139,6 +128,39 @@ class MainFragment : Fragment() {
             .setNegativeButton("いいえ", null)
             .show()
     }
+
+    private fun eatedAlertDialog(title: String, message: String) {
+
+        val AlertDialogBuiluder = android.app.AlertDialog.Builder(activity)
+
+        AlertDialogBuiluder
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("はい", (DialogInterface.OnClickListener { dialog, which ->
+                // OK button pressed
+                //        DB
+                eatMemory.ramenName = "この日、ラーメンを食べた"
+                eatMemory.eatDate = "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日"
+
+                val eatMemoryDB = Room.databaseBuilder(
+                    activity!!.applicationContext, AppDatabase::class.java, "database-name"
+                ).build()
+
+                val eatMemoryList: MutableList<EatMemory> = mutableListOf()
+                eatMemoryList.add(eatMemory)
+
+                thread {
+
+                    eatMemoryDB.eatMemoryDAO().insertAll(eatMemoryList)
+
+                }
+
+
+            }))
+            .setNegativeButton("いいえ", null)
+            .show()
+    }
+
 
     private fun onProgressChanged(progressBar: ProgressBar, percentage: Int) {
         val animation = ObjectAnimator.ofInt(progressBar, "progress", percentage)
