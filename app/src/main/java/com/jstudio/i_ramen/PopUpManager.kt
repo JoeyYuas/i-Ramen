@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import razerdp.basepopup.BasePopupWindow
 import android.view.animation.Animation
+import android.widget.CalendarView
 
 
 class PopUpManager {
@@ -27,7 +28,7 @@ class PopUpManager {
     class PopUpManagerCalendar(context: Context?) : BasePopupWindow(context) {
 
         override fun onCreateContentView(): View? {
-            return createPopupById(R.layout.trophy_popup)
+            return createPopupById(R.layout.calendar_popup)
         }
 
         override fun onCreateShowAnimation(): Animation {
@@ -36,6 +37,10 @@ class PopUpManager {
 
         override fun onCreateDismissAnimation(): Animation {
             return getDefaultScaleAnimation(false)
+        }
+
+        override fun setOnDismissListener(onDismissListener: OnDismissListener?): BasePopupWindow {
+            return super.setOnDismissListener(onDismissListener)
         }
 
     }
