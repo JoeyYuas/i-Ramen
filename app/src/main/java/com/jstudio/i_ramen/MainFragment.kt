@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
@@ -30,19 +31,11 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-//        viewを保持（とりあえずフラグメントではこれをやっておくと便利かも）
+//        viewを保持
         val thisView = inflater.inflate(R.layout.fragment_main, container, false)
 
 //        アクションバーのタイトルを変更
         activity!!.title = "トップページ"
-
-        //activityに保持されたintentをgetしている（あまりフラグメント間で遷移させないほうがいいかも）
-//        val isQuestClear = activity!!.intent.getBooleanExtra("QUEST_CLEAR", false)
-//
-//        if (isQuestClear) {
-//            Toast.makeText(context, "クエストクリアおめでとう", Toast.LENGTH_LONG).show()
-//            activity!!.intent.putExtra("QUEST_CLEAR", false)
-//        }
 
 //        データ保存処理
         val SharedPreferences =
@@ -50,14 +43,11 @@ class MainFragment : Fragment() {
 
 //        ポイント処理（呼び出し、表示、保存）
         val pointManager = PointManager()
-        //pointManager.setPoint(SharedPreferences, 250)
         val havePoint = pointManager.getPoint(SharedPreferences)
 
         val ticker = thisView.findViewById<TickerView>(R.id.havePoint)
         ticker.text = "$havePoint pt"
 
-//        val havePointText = thisView.findViewById<TextView>(R.id.havePoint)
-//        havePointText.text = "${havePoint} pt"
         val eatCount = thisView.findViewById<TextView>(R.id.eat_count)
         eatCount.text = "${havePoint / 100} 杯まで食べられます"
 
@@ -75,39 +65,45 @@ class MainFragment : Fragment() {
         }
 
 //        EATボタンを押したときの挙動（カレンダーを表示）
-        val PopUpCalendarView = PopUpManager.PopUpManagerCalendar(context)
-        val eatButton = thisView.findViewById<Button>(R.id.button_Eat)
-        eatButton.setOnClickListener {
+        if(havePoint < 100){
+            simpleAlertDialog("ポイントが足りません", "100pt貯めるまで我慢！")
+        }else {
 
-            Toast.makeText(context, "日付を選択してカレンダーの\n外をタップして下さい", Toast.LENGTH_LONG).show()
 
-            PopUpCalendarView.showPopupWindow()
-            val calendarView = PopUpCalendarView.findViewById<CalendarView>(R.id.calendarView)
+            val PopUpCalendarView = PopUpManager.PopUpManagerCalendar(context)
+            val eatButton = thisView.findViewById<Button>(R.id.button_Eat)
+            eatButton.setOnClickListener {
+
+                Toast.makeText(context, "日付を選択してここをタップ", Toast.LENGTH_LONG).show()
+
+                PopUpCalendarView.showPopupWindow()
+                val calendarView = PopUpCalendarView.findViewById<CalendarView>(R.id.calendarView)
 
 //            その日のまま閉じた場合
-            val dateList = dateManager.getIntDate()
-            selectedYear = dateList[0]
-            selectedMonth = dateList[1]
-            selectedDayOfMonth = dateList[2]
+                val dateList = dateManager.getIntDate()
+                selectedYear = dateList[0]
+                selectedMonth = dateList[1]
+                selectedDayOfMonth = dateList[2]
 
 
 //            カレンダーを選択したときの挙動（日付を読み取る）
-            calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-                selectedYear = year
-                selectedMonth = month
-                selectedDayOfMonth = dayOfMonth
+                calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+                    selectedYear = year
+                    selectedMonth = month
+                    selectedDayOfMonth = dayOfMonth
+                }
+            }
+
+            PopUpCalendarView.onDismissListener = object : BasePopupWindow.OnDismissListener() {
+                override fun onDismiss() {
+                    eatedAlertDialog(
+                        "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日",
+                        "\n100pt消費してラーメンを食べます",
+                        SharedPreferences
+                        )
+                }
             }
         }
-
-        PopUpCalendarView.onDismissListener = object : BasePopupWindow.OnDismissListener() {
-            override fun onDismiss() {
-                eatedAlertDialog(
-                    "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日",
-                    "\nこの日にラーメンを食べましたか？"
-                )
-            }
-        }
-
 
         return thisView
     }
@@ -122,14 +118,13 @@ class MainFragment : Fragment() {
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("はい", (DialogInterface.OnClickListener { dialog, which ->
-                // OK button pressed
                 fragmentManager!!.beginTransaction().replace(R.id.fragment_container, QuestFragment()).commit()
             }))
             .setNegativeButton("いいえ", null)
             .show()
     }
 
-    private fun eatedAlertDialog(title: String, message: String) {
+    private fun eatedAlertDialog(title: String, message: String, sharedPreferences: SharedPreferences) {
 
         val AlertDialogBuiluder = android.app.AlertDialog.Builder(activity)
 
@@ -138,8 +133,15 @@ class MainFragment : Fragment() {
             .setMessage(message)
             .setPositiveButton("はい", (DialogInterface.OnClickListener { dialog, which ->
                 // OK button pressed
+                //                ポイントを消費
+                val SharedPreferences_PointManager =
+                    activity!!.getSharedPreferences("SAVE_DATE_ALERT", Context.MODE_PRIVATE)
+
+                val havePoint = PointManager().getPoint(sharedPreferences)
+                PointManager().setPoint(SharedPreferences_PointManager, havePoint - 100)
+
                 //        DB
-                eatMemory.ramenName = "この日、ラーメンを食べた"
+                eatMemory.ramenName = ""
                 eatMemory.eatDate = "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日"
 
                 val eatMemoryDB = Room.databaseBuilder(
@@ -155,9 +157,19 @@ class MainFragment : Fragment() {
 
                 }
 
-
             }))
             .setNegativeButton("いいえ", null)
+            .show()
+    }
+
+    private fun simpleAlertDialog(title: String, message: String) {
+
+        val AlertDialogBuiluder = android.app.AlertDialog.Builder(activity)
+
+        AlertDialogBuiluder
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("OK", null)
             .show()
     }
 
@@ -168,5 +180,4 @@ class MainFragment : Fragment() {
         animation.interpolator = DecelerateInterpolator()
         animation.start()
     }
-
 }
