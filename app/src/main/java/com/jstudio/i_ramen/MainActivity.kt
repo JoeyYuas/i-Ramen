@@ -1,6 +1,7 @@
 package com.jstudio.i_ramen
 
-import android.arch.persistence.room.Room
+import android.content.Intent
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -56,6 +57,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.fragment_memory -> {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MemoryFragment()).commit()
+            }
+            R.id.license -> {
+                val intent = Intent(this, OssLicensesMenuActivity::class.java)
+                intent.putExtra("title", "OSS License")
+                startActivity(intent)
             }
         }
         drawer.closeDrawer(GravityCompat.START)
