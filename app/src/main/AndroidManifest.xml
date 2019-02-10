@@ -22,7 +22,13 @@
                 android:resource="@array/preloaded_fonts"/>
 
         <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+                  android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+                  android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+                  android:theme="@style/AppTheme">
         </activity>
     </application>
 

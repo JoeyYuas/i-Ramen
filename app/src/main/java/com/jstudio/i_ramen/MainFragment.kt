@@ -45,6 +45,7 @@ class MainFragment : Fragment() {
         val pointManager = PointManager()
         val havePoint = pointManager.getPoint(SharedPreferences)
 
+
         val ticker = thisView.findViewById<TickerView>(R.id.havePoint)
         ticker.text = "$havePoint pt"
 
@@ -65,14 +66,15 @@ class MainFragment : Fragment() {
         }
 
 //        EATボタンを押したときの挙動（カレンダーを表示）
-        if(havePoint < 100){
-            simpleAlertDialog("ポイントが足りません", "100pt貯めるまで我慢！")
-        }else {
 
 
-            val PopUpCalendarView = PopUpManager.PopUpManagerCalendar(context)
-            val eatButton = thisView.findViewById<Button>(R.id.button_Eat)
-            eatButton.setOnClickListener {
+        val PopUpCalendarView = PopUpManager.PopUpManagerCalendar(context)
+        val eatButton = thisView.findViewById<Button>(R.id.button_Eat)
+        eatButton.setOnClickListener {
+
+            if (havePoint < 100) {
+                simpleAlertDialog("ポイントが足りません", "100pt貯めるまで我慢！")
+            } else {
 
                 Toast.makeText(context, "日付を選択してここをタップ", Toast.LENGTH_LONG).show()
 
@@ -93,15 +95,16 @@ class MainFragment : Fragment() {
                     selectedDayOfMonth = dayOfMonth
                 }
             }
+        }
 
-            PopUpCalendarView.onDismissListener = object : BasePopupWindow.OnDismissListener() {
-                override fun onDismiss() {
-                    eatedAlertDialog(
-                        "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日",
-                        "\n100pt消費してラーメンを食べます",
-                        SharedPreferences
-                        )
-                }
+        PopUpCalendarView.onDismissListener = object : BasePopupWindow.OnDismissListener() {
+            override fun onDismiss() {
+                eatedAlertDialog(
+                    "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日",
+                    "\n100pt消費してラーメンを食べます",
+                    SharedPreferences,
+                    ticker
+                )
             }
         }
 
@@ -124,7 +127,12 @@ class MainFragment : Fragment() {
             .show()
     }
 
-    private fun eatedAlertDialog(title: String, message: String, sharedPreferences: SharedPreferences) {
+    private fun eatedAlertDialog(
+        title: String,
+        message: String,
+        sharedPreferences: SharedPreferences,
+        ticker: TickerView
+    ) {
 
         val AlertDialogBuiluder = android.app.AlertDialog.Builder(activity)
 
@@ -137,8 +145,11 @@ class MainFragment : Fragment() {
                 val SharedPreferences_PointManager =
                     activity!!.getSharedPreferences("SAVE_DATE_ALERT", Context.MODE_PRIVATE)
 
-                val havePoint = PointManager().getPoint(sharedPreferences)
-                PointManager().setPoint(SharedPreferences_PointManager, havePoint - 100)
+                val havePoint = (PointManager().getPoint(sharedPreferences) - 100)
+                ticker.text = "$havePoint pt"
+
+                PointManager().setPoint(SharedPreferences_PointManager, havePoint)
+
 
                 //        DB
                 eatMemory.ramenName = ""
