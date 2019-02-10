@@ -102,7 +102,8 @@ class MainFragment : Fragment() {
                 eatedAlertDialog(
                     "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日",
                     "\n100pt消費してラーメンを食べます",
-                    SharedPreferences
+                    SharedPreferences,
+                    ticker
                 )
             }
         }
@@ -126,7 +127,12 @@ class MainFragment : Fragment() {
             .show()
     }
 
-    private fun eatedAlertDialog(title: String, message: String, sharedPreferences: SharedPreferences) {
+    private fun eatedAlertDialog(
+        title: String,
+        message: String,
+        sharedPreferences: SharedPreferences,
+        ticker: TickerView
+    ) {
 
         val AlertDialogBuiluder = android.app.AlertDialog.Builder(activity)
 
@@ -139,8 +145,11 @@ class MainFragment : Fragment() {
                 val SharedPreferences_PointManager =
                     activity!!.getSharedPreferences("SAVE_DATE_ALERT", Context.MODE_PRIVATE)
 
-                val havePoint = PointManager().getPoint(sharedPreferences)
-                PointManager().setPoint(SharedPreferences_PointManager, havePoint - 100)
+                val havePoint = (PointManager().getPoint(sharedPreferences) - 100)
+                ticker.text = "$havePoint pt"
+
+                PointManager().setPoint(SharedPreferences_PointManager, havePoint)
+
 
                 //        DB
                 eatMemory.ramenName = ""
