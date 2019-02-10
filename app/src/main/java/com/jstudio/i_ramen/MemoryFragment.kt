@@ -42,6 +42,7 @@ class MemoryFragment : Fragment() {
 
                 }
 
+
 //            RecyclerViewに枠線を追加
             recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 

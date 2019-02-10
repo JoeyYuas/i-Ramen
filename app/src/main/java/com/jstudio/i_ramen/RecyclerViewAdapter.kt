@@ -11,12 +11,13 @@ class RecyclerViewAdapter(private val myDataset: MutableList<EatMemory>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
 
-
     class MyViewHolder(val textView: View) : RecyclerView.ViewHolder(textView)
 
 
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): RecyclerViewAdapter.MyViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RecyclerViewAdapter.MyViewHolder {
         val recycleTextView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycle_text_view, parent, false)
 
