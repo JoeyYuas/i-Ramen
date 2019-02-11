@@ -7,6 +7,10 @@
     <string name="havePoint">0 pt</string>
     <string name="questMassage">クエストはありません</string>
     <string name="questTitle">TODAY\'S QUEST</string>
+    <string name="settingName">食べたラーメンの名前</string>
+    <string name="settingDate">ラーメンを食べた日付</string>
+    <string name="settingDeleat">このデータを削除する</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

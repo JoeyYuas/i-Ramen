@@ -103,7 +103,8 @@ class MainFragment : Fragment() {
                     "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日",
                     "\n100pt消費してラーメンを食べます",
                     SharedPreferences,
-                    ticker
+                    ticker,
+                    eatCount
                 )
             }
         }
@@ -131,7 +132,8 @@ class MainFragment : Fragment() {
         title: String,
         message: String,
         sharedPreferences: SharedPreferences,
-        ticker: TickerView
+        ticker: TickerView,
+        eatCount: TextView
     ) {
 
         val AlertDialogBuiluder = android.app.AlertDialog.Builder(activity)
@@ -147,11 +149,21 @@ class MainFragment : Fragment() {
 
                 val havePoint = (PointManager().getPoint(sharedPreferences) - 100)
                 ticker.text = "$havePoint pt"
+                eatCount.text = "${havePoint / 100} 杯まで食べられます"
+
 
                 PointManager().setPoint(SharedPreferences_PointManager, havePoint)
 
 
                 //        DB
+                val SharedPreferences_UIDController =
+                    activity!!.getSharedPreferences("UID", Context.MODE_PRIVATE)
+                val uid = SharedPreferences_UIDController.getInt("UID", 0) + 1
+                val editor = SharedPreferences_UIDController.edit()
+                editor.putInt("UID", uid).apply()
+
+
+                eatMemory.uid = uid
                 eatMemory.ramenName = ""
                 eatMemory.eatDate = "${selectedYear}年${selectedMonth}月${selectedDayOfMonth}日"
 
@@ -183,7 +195,6 @@ class MainFragment : Fragment() {
             .setPositiveButton("OK", null)
             .show()
     }
-
 
     private fun onProgressChanged(progressBar: ProgressBar, percentage: Int) {
         val animation = ObjectAnimator.ofInt(progressBar, "progress", percentage)

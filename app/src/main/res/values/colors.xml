@@ -9,5 +9,6 @@
     <color name="button_default">#FDB87B</color>
     <color name="button_onclick">#F7D2B2</color>
     <color name="text_black">#3D3D3D</color>
+    <color name="stroke">#C0BEBE</color>
 
 </resources>

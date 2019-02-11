@@ -8,8 +8,9 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true">
-        <activity android:name=".TopPage"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+                android:name=".TopPage"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -21,14 +22,20 @@
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts"/>
 
-        <activity android:name=".MainActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+                android:name=".MainActivity"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+        <activity android:name=".MemorySetting"
                   android:theme="@style/AppTheme">
         </activity>
-        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-                  android:theme="@style/AppTheme">
+        <activity
+                android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+                android:theme="@style/AppTheme">
+        </activity>
+        <activity
+                android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+                android:theme="@style/AppTheme">
         </activity>
     </application>
 

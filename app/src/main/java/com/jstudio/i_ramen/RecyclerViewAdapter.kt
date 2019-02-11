@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.recycle_text_view.view.*
 class RecyclerViewAdapter(private val myDataset: MutableList<EatMemory>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
+    lateinit var listener: OnItemClickListener
 
     class MyViewHolder(val textView: View) : RecyclerView.ViewHolder(textView)
 
@@ -31,7 +32,19 @@ class RecyclerViewAdapter(private val myDataset: MutableList<EatMemory>) :
         ramenName.text = myDataset[position].ramenName
         eatedDay.text = myDataset[position].eatDate
 
+        holder.textView.setOnClickListener {
+            listener.onClick(it, myDataset[position].uid)
+        }
     }
+
+    interface OnItemClickListener {
+        fun onClick(view: View, uid: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = myDataset.size
