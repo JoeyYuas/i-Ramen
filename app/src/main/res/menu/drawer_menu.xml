@@ -5,23 +5,18 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/fragment_main"
-              android:icon="@drawable/ic_test"
               android:title="トップページ"/>
         <item android:id="@+id/fragment_quest"
-              android:icon="@drawable/ic_test"
               android:title="クエスト"/>
         <item android:id="@+id/fragment_memory"
-              android:icon="@drawable/ic_test"
               android:title="ラーメンの記憶"/>
     </group>
 
-    <item android:title="TestList">
+    <item android:title="">
         <menu>
-            <item android:id="@+id/test4"
-                  android:icon="@drawable/ic_test"
-                  android:title="test4"/>
+            <item android:id="@+id/help"
+                  android:title="ヘルプ"/>
             <item android:id="@+id/license"
-                  android:icon="@drawable/ic_test"
                   android:title="著作権について"/>
         </menu>
     </item>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:focusable="true"
+             android:clickable="true"
+             android:layout_height="wrap_content"
+             android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ramenNameLinearLayout">
+
+            <TextView
+                    android:paddingLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_black"
+                    android:text="@string/settingName"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+            <TextView
+                    android:id="@+id/setting_ramenName"
+                    android:paddingLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_black"
+                    android:textStyle="normal"
+                    android:text="aaaaaaa"
+                    android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/eatedDateLinearLayout">-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="@color/text_black"-->
+        <!--android:text="@string/settingDate"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textSize="16sp"-->
+        <!--android:paddingLeft="5dp"/>-->
+        <!--<TextView-->
+        <!--android:id="@+id/setting_date"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="@color/text_black"-->
+        <!--android:textStyle="normal"-->
+        <!--android:text="aaaaaaa"-->
+        <!--android:textSize="14sp"-->
+        <!--android:paddingLeft="5dp"/>-->
+
+        <!--</LinearLayout>-->
+
+        <LinearLayout
+                android:background="@drawable/stroke_settign"
+                android:paddingTop="5dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp"
+                android:id="@+id/settingDeleteLinearLayout">
+
+            <TextView
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_black"
+                    android:text="@string/settingDeleat"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:paddingLeft="5dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
