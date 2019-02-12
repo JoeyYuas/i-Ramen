@@ -22,10 +22,11 @@ class MainFragment : Fragment() {
 
     //        日付処理
     private val dateManager = DateManager()
+    private val dateList = dateManager.getIntDate()
 
-    var selectedYear: Int? = null
-    var selectedMonth: Int? = null
-    var selectedDayOfMonth: Int? = null
+    var selectedYear = 0
+    var selectedMonth = 0
+    var selectedDayOfMonth = 0
 
     private val eatMemory = EatMemory()
 
@@ -91,7 +92,7 @@ class MainFragment : Fragment() {
                 val calendarView = PopUpCalendarView.findViewById<CalendarView>(R.id.calendarView)
 
 //            その日のまま閉じた場合
-                val dateList = dateManager.getIntDate()
+
                 selectedYear = dateList[0]
                 selectedMonth = dateList[1]
                 selectedDayOfMonth = dateList[2]
@@ -100,7 +101,7 @@ class MainFragment : Fragment() {
 //            カレンダーを選択したときの挙動（日付を読み取る）
                 calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
                     selectedYear = year
-                    selectedMonth = month
+                    selectedMonth = month + 1
                     selectedDayOfMonth = dayOfMonth
                 }
             }
@@ -190,7 +191,11 @@ class MainFragment : Fragment() {
                 }
 
             }))
-            .setNegativeButton("いいえ", null)
+            .setNegativeButton("いいえ", (DialogInterface.OnClickListener { dialog, which ->
+                dateList[0] = selectedYear
+                dateList[1] = selectedMonth
+                dateList[2] = selectedDayOfMonth
+            }))
             .show()
     }
 
