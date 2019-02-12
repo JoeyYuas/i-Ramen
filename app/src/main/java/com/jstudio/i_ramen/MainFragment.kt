@@ -43,7 +43,7 @@ class MainFragment : Fragment() {
 
 //        ポイント処理（呼び出し、表示、保存）
         val pointManager = PointManager()
-        val havePoint = pointManager.getPoint(SharedPreferences)
+        var havePoint = pointManager.getPoint(SharedPreferences)
 
 
         val ticker = thisView.findViewById<TickerView>(R.id.havePoint)
@@ -65,9 +65,18 @@ class MainFragment : Fragment() {
             )
         }
 
+//        デバッグ用
+        thisView.findViewById<Button>(R.id.debugButton).setOnClickListener {
+            havePoint += 110
+
+            pointManager.setPoint(SharedPreferences, havePoint + 110)
+
+            onProgressChanged(progressBar, havePoint % 100)
+            ticker.text = "$havePoint pt"
+            eatCount.text = "${havePoint / 100} 杯まで食べられます"
+        }
+
 //        EATボタンを押したときの挙動（カレンダーを表示）
-
-
         val PopUpCalendarView = PopUpManager.PopUpManagerCalendar(context)
         val eatButton = thisView.findViewById<Button>(R.id.button_Eat)
         eatButton.setOnClickListener {

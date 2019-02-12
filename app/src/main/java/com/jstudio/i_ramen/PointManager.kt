@@ -17,7 +17,11 @@ class PointManager {
 
     fun setPoint(SharedPreferences: SharedPreferences, saveNum:Int){
         val editor = SharedPreferences.edit()
-        editor.putInt("havePoint", saveNum).apply()
+        if(saveNum > 9999){
+            editor.putInt("havePoint", 9999).apply()
+        }else {
+            editor.putInt("havePoint", saveNum).apply()
+        }
     }
 
 }
